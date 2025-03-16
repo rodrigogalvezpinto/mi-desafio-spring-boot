@@ -1,0 +1,10 @@
+com\nuevospa\gestiontareas\api\ApiControllerTest.class
+com\nuevospa\gestiontareas\mapper\DtoMapperTest.class
+com\nuevospa\gestiontareas\controller\HomeControllerTest.class
+com\nuevospa\gestiontareas\service\UsuarioServiceTest.class
+com\nuevospa\gestiontareas\api\delegate\TareasApiDelegateImplTest.class
+com\nuevospa\gestiontareas\security\JwtRequestFilterTest.class
+com\nuevospa\gestiontareas\security\JwtUserDetailsServiceTest.class
+com\nuevospa\gestiontareas\api\delegate\AuthApiDelegateImplTest.class
+com\nuevospa\gestiontareas\service\TareaServiceTest.class
+com\nuevospa\gestiontareas\security\JwtTokenUtilTest.class

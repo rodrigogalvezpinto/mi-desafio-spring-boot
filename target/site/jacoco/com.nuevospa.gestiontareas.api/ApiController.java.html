@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ApiController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestion-tareas</a> &gt; <a href="index.source.html" class="el_package">com.nuevospa.gestiontareas.api</a> &gt; <span class="el_source">ApiController.java</span></div><h1>ApiController.java</h1><pre class="source lang-java linenums">package com.nuevospa.gestiontareas.api;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.nuevospa.gestiontareas.api.delegate.AuthApiDelegateImpl;
+import com.nuevospa.gestiontareas.api.delegate.EstadosApiDelegateImpl;
+import com.nuevospa.gestiontareas.api.delegate.PrioridadesApiDelegateImpl;
+import com.nuevospa.gestiontareas.api.delegate.TareasApiDelegateImpl;
+import com.nuevospa.gestiontareas.api.delegate.UsuariosApiDelegateImpl;
+import com.nuevospa.gestiontareas.api.generated.ApiApi;
+import com.nuevospa.gestiontareas.dto.generated.CambioEstadoTarea;
+import com.nuevospa.gestiontareas.dto.generated.EstadoTarea;
+import com.nuevospa.gestiontareas.dto.generated.LoginRequest;
+import com.nuevospa.gestiontareas.dto.generated.LoginResponse;
+import com.nuevospa.gestiontareas.dto.generated.PageTarea;
+import com.nuevospa.gestiontareas.dto.generated.Prioridad;
+import com.nuevospa.gestiontareas.dto.generated.Tarea;
+import com.nuevospa.gestiontareas.dto.generated.Usuario;
+import com.nuevospa.gestiontareas.mapper.DtoMapper;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * Controlador principal que implementa la especificación OpenAPI.
+ * 
+ * Este controlador sigue el enfoque API First, donde la especificación OpenAPI
+ * define el contrato de la API antes de la implementación. Implementa la interfaz
+ * generada automáticamente a partir de la especificación OpenAPI y delega la
+ * lógica de negocio a los delegados correspondientes.
+ * 
+ * Se recomienda utilizar este controlador en lugar de los controladores tradicionales
+ * que están marcados como @Deprecated.
+ */
+@RestController
+<span class="fc" id="L40">@RequiredArgsConstructor</span>
+<span class="fc" id="L41">@Slf4j</span>
+public class ApiController implements ApiApi {
+
+    private final AuthApiDelegateImpl authApiDelegate;
+    private final TareasApiDelegateImpl tareasApiDelegate;
+    private final UsuariosApiDelegateImpl usuariosApiDelegate;
+    private final EstadosApiDelegateImpl estadosApiDelegate;
+    private final PrioridadesApiDelegateImpl prioridadesApiDelegate;
+    private final DtoMapper dtoMapper;
+
+    @Override
+    public ResponseEntity&lt;Tarea&gt; _actualizarEstadoTarea(UUID id, CambioEstadoTarea cambioEstadoTareaDto) {
+<span class="nc" id="L53">        log.info(&quot;Actualizando estado de tarea con ID: {}&quot;, id);</span>
+<span class="nc" id="L54">        return dtoMapper.toTareaResponse(</span>
+<span class="nc" id="L55">                tareasApiDelegate.actualizarEstadoTarea(id, dtoMapper.toModel(cambioEstadoTareaDto))</span>
+        );
+    }
+
+    @Override
+    public ResponseEntity&lt;Tarea&gt; _actualizarTarea(UUID id, Tarea tareaDto) {
+<span class="nc" id="L61">        log.info(&quot;Actualizando tarea con ID: {}&quot;, id);</span>
+<span class="nc" id="L62">        return dtoMapper.toTareaResponse(</span>
+<span class="nc" id="L63">                tareasApiDelegate.actualizarTarea(id, dtoMapper.toModel(tareaDto))</span>
+        );
+    }
+
+    @Override
+    public ResponseEntity&lt;Void&gt; _crearTarea(Tarea tareaDto) {
+<span class="nc" id="L69">        log.info(&quot;Creando nueva tarea&quot;);</span>
+<span class="nc" id="L70">        return tareasApiDelegate.crearTarea(dtoMapper.toModel(tareaDto));</span>
+    }
+
+    @Override
+    public ResponseEntity&lt;Void&gt; _eliminarTarea(UUID id) {
+<span class="nc" id="L75">        log.info(&quot;Eliminando tarea con ID: {}&quot;, id);</span>
+<span class="nc" id="L76">        return tareasApiDelegate.eliminarTarea(id);</span>
+    }
+
+    @Override
+    public ResponseEntity&lt;LoginResponse&gt; _login(LoginRequest loginRequestDto) {
+<span class="fc" id="L81">        log.info(&quot;Procesando solicitud de login para: {}&quot;, loginRequestDto.getEmail());</span>
+<span class="fc" id="L82">        return dtoMapper.toLoginResponse(</span>
+<span class="fc" id="L83">                authApiDelegate.login(dtoMapper.toModel(loginRequestDto))</span>
+        );
+    }
+
+    @Override
+    public ResponseEntity&lt;List&lt;EstadoTarea&gt;&gt; _obtenerEstados() {
+<span class="fc" id="L89">        log.info(&quot;Obteniendo todos los estados de tareas&quot;);</span>
+<span class="fc" id="L90">        return dtoMapper.toEstadoListResponse(</span>
+<span class="fc" id="L91">                estadosApiDelegate.obtenerEstados()</span>
+        );
+    }
+
+    @Override
+    public ResponseEntity&lt;List&lt;Prioridad&gt;&gt; _obtenerPrioridades() {
+<span class="nc" id="L97">        log.info(&quot;Obteniendo todas las prioridades&quot;);</span>
+<span class="nc" id="L98">        return dtoMapper.toPrioridadListResponse(</span>
+<span class="nc" id="L99">                prioridadesApiDelegate.obtenerPrioridades()</span>
+        );
+    }
+
+    @Override
+    public ResponseEntity&lt;Tarea&gt; _obtenerTareaPorId(UUID id) {
+<span class="fc" id="L105">        log.info(&quot;Obteniendo tarea con ID: {}&quot;, id);</span>
+<span class="fc" id="L106">        return dtoMapper.toTareaResponse(</span>
+<span class="fc" id="L107">                tareasApiDelegate.obtenerTareaPorId(id)</span>
+        );
+    }
+
+    @Override
+    public ResponseEntity&lt;PageTarea&gt; _obtenerTareas(Integer page, Integer size, Integer estadoId, UUID usuarioId, Integer prioridad, String sort) {
+<span class="nc" id="L113">        log.info(&quot;Obteniendo tareas paginadas. Página: {}, Tamaño: {}&quot;, page, size);</span>
+<span class="nc" id="L114">        return dtoMapper.toPageTareaResponse(</span>
+<span class="nc" id="L115">                tareasApiDelegate.obtenerTareas(page, size, estadoId, usuarioId, prioridad, sort)</span>
+        );
+    }
+
+    @Override
+    public ResponseEntity&lt;Usuario&gt; _obtenerUsuarioPorId(UUID id) {
+<span class="nc" id="L121">        log.info(&quot;Obteniendo usuario con ID: {}&quot;, id);</span>
+<span class="nc" id="L122">        return dtoMapper.toUsuarioResponse(</span>
+<span class="nc" id="L123">                usuariosApiDelegate.obtenerUsuarioPorId(id)</span>
+        );
+    }
+
+    @Override
+    public ResponseEntity&lt;List&lt;Usuario&gt;&gt; _obtenerUsuarios() {
+<span class="nc" id="L129">        log.info(&quot;Obteniendo todos los usuarios&quot;);</span>
+<span class="nc" id="L130">        return dtoMapper.toUsuarioListResponse(</span>
+<span class="nc" id="L131">                usuariosApiDelegate.obtenerUsuarios()</span>
+        );
+    }
+} 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

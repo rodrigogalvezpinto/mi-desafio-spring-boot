@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsuarioService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestion-tareas</a> &gt; <a href="index.source.html" class="el_package">com.nuevospa.gestiontareas.service</a> &gt; <span class="el_source">UsuarioService.java</span></div><h1>UsuarioService.java</h1><pre class="source lang-java linenums">package com.nuevospa.gestiontareas.service;
+
+import com.nuevospa.gestiontareas.model.Usuario;
+import com.nuevospa.gestiontareas.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+<span class="fc" id="L15">@RequiredArgsConstructor</span>
+public class UsuarioService {
+
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Transactional(readOnly = true)
+    public List&lt;Usuario&gt; findAll() {
+<span class="fc" id="L23">        return usuarioRepository.findAll();</span>
+    }
+
+    @Transactional(readOnly = true)
+    public Optional&lt;Usuario&gt; findById(UUID id) {
+<span class="fc" id="L28">        return usuarioRepository.findById(id);</span>
+    }
+
+    @Transactional(readOnly = true)
+    public Optional&lt;Usuario&gt; findByEmail(String email) {
+<span class="fc" id="L33">        return usuarioRepository.findByEmail(email);</span>
+    }
+
+    @Transactional
+    public Usuario save(Usuario usuario) {
+        // Encriptar contraseña si no está encriptada
+<span class="pc bpc" id="L39" title="2 of 4 branches missed.">        if (usuario.getPassword() != null &amp;&amp; !usuario.getPassword().startsWith(&quot;$2a$&quot;)) {</span>
+<span class="fc" id="L40">            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));</span>
+        }
+<span class="fc" id="L42">        return usuarioRepository.save(usuario);</span>
+    }
+
+    @Transactional
+    public void deleteById(UUID id) {
+<span class="fc" id="L47">        usuarioRepository.deleteById(id);</span>
+<span class="fc" id="L48">    }</span>
+
+    @Transactional(readOnly = true)
+    public boolean existsByEmail(String email) {
+<span class="nc" id="L52">        return usuarioRepository.existsByEmail(email);</span>
+    }
+} 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

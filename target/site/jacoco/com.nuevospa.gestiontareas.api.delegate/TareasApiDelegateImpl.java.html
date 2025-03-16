@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TareasApiDelegateImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestion-tareas</a> &gt; <a href="index.source.html" class="el_package">com.nuevospa.gestiontareas.api.delegate</a> &gt; <span class="el_source">TareasApiDelegateImpl.java</span></div><h1>TareasApiDelegateImpl.java</h1><pre class="source lang-java linenums">package com.nuevospa.gestiontareas.api.delegate;
+
+import com.nuevospa.gestiontareas.api.TareasApiDelegate;
+import com.nuevospa.gestiontareas.dto.CambioEstadoTarea;
+import com.nuevospa.gestiontareas.dto.PageTarea;
+import com.nuevospa.gestiontareas.model.Tarea;
+import com.nuevospa.gestiontareas.service.TareaService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
+import java.util.UUID;
+
+@Component
+<span class="fc" id="L22">@RequiredArgsConstructor</span>
+<span class="fc" id="L23">@Slf4j</span>
+public class TareasApiDelegateImpl implements TareasApiDelegate {
+
+    private final TareaService tareaService;
+
+    @Override
+    public ResponseEntity&lt;PageTarea&gt; obtenerTareas(Integer page, Integer size, Integer estadoId, 
+                                                 UUID usuarioId, Integer prioridad, String sort) {
+<span class="fc" id="L31">        log.info(&quot;Obteniendo tareas con filtros: estadoId={}, usuarioId={}, prioridad={}, page={}, size={}, sort={}&quot;,</span>
+                estadoId, usuarioId, prioridad, page, size, sort);
+        
+        Pageable pageable;
+<span class="pc bpc" id="L35" title="2 of 4 branches missed.">        if (sort != null &amp;&amp; !sort.isEmpty()) {</span>
+<span class="fc" id="L36">            String[] sortParams = sort.split(&quot;,&quot;);</span>
+<span class="fc" id="L37">            String sortField = sortParams[0];</span>
+<span class="pc bpc" id="L38" title="2 of 4 branches missed.">            Sort.Direction direction = sortParams.length &gt; 1 &amp;&amp; sortParams[1].equalsIgnoreCase(&quot;desc&quot;) </span>
+<span class="pc" id="L39">                    ? Sort.Direction.DESC : Sort.Direction.ASC;</span>
+<span class="fc" id="L40">            pageable = PageRequest.of(page, size, Sort.by(direction, sortField));</span>
+<span class="fc" id="L41">        } else {</span>
+<span class="nc" id="L42">            pageable = PageRequest.of(page, size);</span>
+        }
+        
+<span class="fc" id="L45">        Page&lt;Tarea&gt; tareas = tareaService.findFiltered(estadoId, usuarioId, prioridad, pageable);</span>
+        
+        // Convertir Page&lt;Tarea&gt; a PageTarea
+<span class="fc" id="L48">        PageTarea pageResponse = new PageTarea();</span>
+<span class="fc" id="L49">        pageResponse.setContent(tareas.getContent());</span>
+<span class="fc" id="L50">        pageResponse.setPageable(tareas.getPageable());</span>
+<span class="fc" id="L51">        pageResponse.setLast(tareas.isLast());</span>
+<span class="fc" id="L52">        pageResponse.setTotalPages(tareas.getTotalPages());</span>
+<span class="fc" id="L53">        pageResponse.setTotalElements(tareas.getTotalElements());</span>
+<span class="fc" id="L54">        pageResponse.setSize(tareas.getSize());</span>
+<span class="fc" id="L55">        pageResponse.setNumber(tareas.getNumber());</span>
+<span class="fc" id="L56">        pageResponse.setSort(tareas.getSort());</span>
+<span class="fc" id="L57">        pageResponse.setFirst(tareas.isFirst());</span>
+<span class="fc" id="L58">        pageResponse.setNumberOfElements(tareas.getNumberOfElements());</span>
+<span class="fc" id="L59">        pageResponse.setEmpty(tareas.isEmpty());</span>
+        
+<span class="fc" id="L61">        return ResponseEntity.ok(pageResponse);</span>
+    }
+
+    @Override
+    public ResponseEntity&lt;Tarea&gt; obtenerTareaPorId(UUID id) {
+<span class="fc" id="L66">        log.info(&quot;Obteniendo tarea con ID: {}&quot;, id);</span>
+        
+<span class="fc" id="L68">        return tareaService.findById(id)</span>
+<span class="fc" id="L69">                .map(ResponseEntity::ok)</span>
+<span class="fc" id="L70">                .orElse(ResponseEntity.notFound().build());</span>
+    }
+
+    @Override
+    public ResponseEntity&lt;Void&gt; crearTarea(Tarea tarea) {
+<span class="fc" id="L75">        log.info(&quot;Creando nueva tarea: {}&quot;, tarea);</span>
+        
+<span class="fc" id="L77">        Tarea tareaSaved = tareaService.save(tarea);</span>
+        
+        URI location = ServletUriComponentsBuilder
+<span class="fc" id="L80">                .fromCurrentRequest()</span>
+<span class="fc" id="L81">                .path(&quot;/{id}&quot;)</span>
+<span class="fc" id="L82">                .buildAndExpand(tareaSaved.getId())</span>
+<span class="fc" id="L83">                .toUri();</span>
+        
+<span class="fc" id="L85">        return ResponseEntity.created(location).build();</span>
+    }
+
+    @Override
+    public ResponseEntity&lt;Tarea&gt; actualizarTarea(UUID id, Tarea tarea) {
+<span class="fc" id="L90">        log.info(&quot;Actualizando tarea con ID: {}&quot;, id);</span>
+        
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (!id.equals(tarea.getId())) {</span>
+<span class="nc" id="L93">            log.error(&quot;ID de la ruta ({}) no coincide con el ID en el cuerpo ({})&quot;, id, tarea.getId());</span>
+<span class="nc" id="L94">            return ResponseEntity.badRequest().build();</span>
+        }
+        
+<span class="fc" id="L97">        return tareaService.findById(id)</span>
+<span class="fc" id="L98">                .map(existingTarea -&gt; {</span>
+<span class="fc" id="L99">                    tarea.setId(id);</span>
+<span class="fc" id="L100">                    tarea.setFechaCreacion(existingTarea.getFechaCreacion());</span>
+<span class="fc" id="L101">                    tarea.setUsuarioCreador(existingTarea.getUsuarioCreador());</span>
+<span class="fc" id="L102">                    tarea.setUsuarioCreadorId(existingTarea.getUsuarioCreadorId());</span>
+<span class="fc" id="L103">                    Tarea updated = tareaService.save(tarea);</span>
+<span class="fc" id="L104">                    return ResponseEntity.ok(updated);</span>
+                })
+<span class="fc" id="L106">                .orElse(ResponseEntity.notFound().build());</span>
+    }
+
+    @Override
+    public ResponseEntity&lt;Void&gt; eliminarTarea(UUID id) {
+<span class="fc" id="L111">        log.info(&quot;Eliminando tarea con ID: {}&quot;, id);</span>
+        
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (!tareaService.findById(id).isPresent()) {</span>
+<span class="fc" id="L114">            return ResponseEntity.notFound().build();</span>
+        }
+        
+<span class="fc" id="L117">        tareaService.deleteById(id);</span>
+<span class="fc" id="L118">        return ResponseEntity.noContent().build();</span>
+    }
+
+    @Override
+    public ResponseEntity&lt;Tarea&gt; actualizarEstadoTarea(UUID id, CambioEstadoTarea cambioEstado) {
+<span class="fc" id="L123">        log.info(&quot;Actualizando estado de tarea con ID: {} a estado: {}&quot;, id, cambioEstado.getEstadoId());</span>
+        
+<span class="fc" id="L125">        return tareaService.cambiarEstado(id, cambioEstado.getEstadoId())</span>
+<span class="fc" id="L126">                .map(ResponseEntity::ok)</span>
+<span class="fc" id="L127">                .orElse(ResponseEntity.notFound().build());</span>
+    }
+} 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

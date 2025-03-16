@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PageTarea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestion-tareas</a> &gt; <a href="index.source.html" class="el_package">com.nuevospa.gestiontareas.dto.generated</a> &gt; <span class="el_source">PageTarea.java</span></div><h1>PageTarea.java</h1><pre class="source lang-java linenums">package com.nuevospa.gestiontareas.dto.generated;
+
+import java.net.URI;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.nuevospa.gestiontareas.dto.generated.Tarea;
+import java.util.ArrayList;
+import java.util.List;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
+
+/**
+ * PageTarea
+ */
+
+@Generated(value = &quot;org.openapitools.codegen.languages.SpringCodegen&quot;, date = &quot;2025-03-16T14:48:11.540969400-03:00[America/Santiago]&quot;)
+<span class="nc" id="L24">public class PageTarea {</span>
+
+  @Valid
+  private List&lt;@Valid Tarea&gt; content;
+
+  private Object pageable;
+
+  private Boolean last;
+
+  private Integer totalPages;
+
+  private Long totalElements;
+
+  private Integer size;
+
+  private Integer number;
+
+  private Object sort;
+
+  private Boolean first;
+
+  private Integer numberOfElements;
+
+  private Boolean empty;
+
+  public PageTarea content(List&lt;@Valid Tarea&gt; content) {
+<span class="nc" id="L50">    this.content = content;</span>
+<span class="nc" id="L51">    return this;</span>
+  }
+
+  public PageTarea addContentItem(Tarea contentItem) {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">    if (this.content == null) {</span>
+<span class="nc" id="L56">      this.content = new ArrayList&lt;&gt;();</span>
+    }
+<span class="nc" id="L58">    this.content.add(contentItem);</span>
+<span class="nc" id="L59">    return this;</span>
+  }
+
+  /**
+   * Get content
+   * @return content
+  */
+  @Valid 
+  @Schema(name = &quot;content&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;content&quot;)
+  public List&lt;@Valid Tarea&gt; getContent() {
+<span class="nc" id="L70">    return content;</span>
+  }
+
+  public void setContent(List&lt;@Valid Tarea&gt; content) {
+<span class="nc" id="L74">    this.content = content;</span>
+<span class="nc" id="L75">  }</span>
+
+  public PageTarea pageable(Object pageable) {
+<span class="nc" id="L78">    this.pageable = pageable;</span>
+<span class="nc" id="L79">    return this;</span>
+  }
+
+  /**
+   * Get pageable
+   * @return pageable
+  */
+  
+  @Schema(name = &quot;pageable&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;pageable&quot;)
+  public Object getPageable() {
+<span class="nc" id="L90">    return pageable;</span>
+  }
+
+  public void setPageable(Object pageable) {
+<span class="nc" id="L94">    this.pageable = pageable;</span>
+<span class="nc" id="L95">  }</span>
+
+  public PageTarea last(Boolean last) {
+<span class="nc" id="L98">    this.last = last;</span>
+<span class="nc" id="L99">    return this;</span>
+  }
+
+  /**
+   * Get last
+   * @return last
+  */
+  
+  @Schema(name = &quot;last&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;last&quot;)
+  public Boolean getLast() {
+<span class="nc" id="L110">    return last;</span>
+  }
+
+  public void setLast(Boolean last) {
+<span class="nc" id="L114">    this.last = last;</span>
+<span class="nc" id="L115">  }</span>
+
+  public PageTarea totalPages(Integer totalPages) {
+<span class="nc" id="L118">    this.totalPages = totalPages;</span>
+<span class="nc" id="L119">    return this;</span>
+  }
+
+  /**
+   * Get totalPages
+   * @return totalPages
+  */
+  
+  @Schema(name = &quot;totalPages&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;totalPages&quot;)
+  public Integer getTotalPages() {
+<span class="nc" id="L130">    return totalPages;</span>
+  }
+
+  public void setTotalPages(Integer totalPages) {
+<span class="nc" id="L134">    this.totalPages = totalPages;</span>
+<span class="nc" id="L135">  }</span>
+
+  public PageTarea totalElements(Long totalElements) {
+<span class="nc" id="L138">    this.totalElements = totalElements;</span>
+<span class="nc" id="L139">    return this;</span>
+  }
+
+  /**
+   * Get totalElements
+   * @return totalElements
+  */
+  
+  @Schema(name = &quot;totalElements&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;totalElements&quot;)
+  public Long getTotalElements() {
+<span class="nc" id="L150">    return totalElements;</span>
+  }
+
+  public void setTotalElements(Long totalElements) {
+<span class="nc" id="L154">    this.totalElements = totalElements;</span>
+<span class="nc" id="L155">  }</span>
+
+  public PageTarea size(Integer size) {
+<span class="nc" id="L158">    this.size = size;</span>
+<span class="nc" id="L159">    return this;</span>
+  }
+
+  /**
+   * Get size
+   * @return size
+  */
+  
+  @Schema(name = &quot;size&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;size&quot;)
+  public Integer getSize() {
+<span class="nc" id="L170">    return size;</span>
+  }
+
+  public void setSize(Integer size) {
+<span class="nc" id="L174">    this.size = size;</span>
+<span class="nc" id="L175">  }</span>
+
+  public PageTarea number(Integer number) {
+<span class="nc" id="L178">    this.number = number;</span>
+<span class="nc" id="L179">    return this;</span>
+  }
+
+  /**
+   * Get number
+   * @return number
+  */
+  
+  @Schema(name = &quot;number&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;number&quot;)
+  public Integer getNumber() {
+<span class="nc" id="L190">    return number;</span>
+  }
+
+  public void setNumber(Integer number) {
+<span class="nc" id="L194">    this.number = number;</span>
+<span class="nc" id="L195">  }</span>
+
+  public PageTarea sort(Object sort) {
+<span class="nc" id="L198">    this.sort = sort;</span>
+<span class="nc" id="L199">    return this;</span>
+  }
+
+  /**
+   * Get sort
+   * @return sort
+  */
+  
+  @Schema(name = &quot;sort&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;sort&quot;)
+  public Object getSort() {
+<span class="nc" id="L210">    return sort;</span>
+  }
+
+  public void setSort(Object sort) {
+<span class="nc" id="L214">    this.sort = sort;</span>
+<span class="nc" id="L215">  }</span>
+
+  public PageTarea first(Boolean first) {
+<span class="nc" id="L218">    this.first = first;</span>
+<span class="nc" id="L219">    return this;</span>
+  }
+
+  /**
+   * Get first
+   * @return first
+  */
+  
+  @Schema(name = &quot;first&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;first&quot;)
+  public Boolean getFirst() {
+<span class="nc" id="L230">    return first;</span>
+  }
+
+  public void setFirst(Boolean first) {
+<span class="nc" id="L234">    this.first = first;</span>
+<span class="nc" id="L235">  }</span>
+
+  public PageTarea numberOfElements(Integer numberOfElements) {
+<span class="nc" id="L238">    this.numberOfElements = numberOfElements;</span>
+<span class="nc" id="L239">    return this;</span>
+  }
+
+  /**
+   * Get numberOfElements
+   * @return numberOfElements
+  */
+  
+  @Schema(name = &quot;numberOfElements&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;numberOfElements&quot;)
+  public Integer getNumberOfElements() {
+<span class="nc" id="L250">    return numberOfElements;</span>
+  }
+
+  public void setNumberOfElements(Integer numberOfElements) {
+<span class="nc" id="L254">    this.numberOfElements = numberOfElements;</span>
+<span class="nc" id="L255">  }</span>
+
+  public PageTarea empty(Boolean empty) {
+<span class="nc" id="L258">    this.empty = empty;</span>
+<span class="nc" id="L259">    return this;</span>
+  }
+
+  /**
+   * Get empty
+   * @return empty
+  */
+  
+  @Schema(name = &quot;empty&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;empty&quot;)
+  public Boolean getEmpty() {
+<span class="nc" id="L270">    return empty;</span>
+  }
+
+  public void setEmpty(Boolean empty) {
+<span class="nc" id="L274">    this.empty = empty;</span>
+<span class="nc" id="L275">  }</span>
+
+  @Override
+  public boolean equals(Object o) {
+<span class="nc bnc" id="L279" title="All 2 branches missed.">    if (this == o) {</span>
+<span class="nc" id="L280">      return true;</span>
+    }
+<span class="nc bnc" id="L282" title="All 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L283">      return false;</span>
+    }
+<span class="nc" id="L285">    PageTarea pageTarea = (PageTarea) o;</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">    return Objects.equals(this.content, pageTarea.content) &amp;&amp;</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">        Objects.equals(this.pageable, pageTarea.pageable) &amp;&amp;</span>
+<span class="nc bnc" id="L288" title="All 2 branches missed.">        Objects.equals(this.last, pageTarea.last) &amp;&amp;</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">        Objects.equals(this.totalPages, pageTarea.totalPages) &amp;&amp;</span>
+<span class="nc bnc" id="L290" title="All 2 branches missed.">        Objects.equals(this.totalElements, pageTarea.totalElements) &amp;&amp;</span>
+<span class="nc bnc" id="L291" title="All 2 branches missed.">        Objects.equals(this.size, pageTarea.size) &amp;&amp;</span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">        Objects.equals(this.number, pageTarea.number) &amp;&amp;</span>
+<span class="nc bnc" id="L293" title="All 2 branches missed.">        Objects.equals(this.sort, pageTarea.sort) &amp;&amp;</span>
+<span class="nc bnc" id="L294" title="All 2 branches missed.">        Objects.equals(this.first, pageTarea.first) &amp;&amp;</span>
+<span class="nc bnc" id="L295" title="All 2 branches missed.">        Objects.equals(this.numberOfElements, pageTarea.numberOfElements) &amp;&amp;</span>
+<span class="nc bnc" id="L296" title="All 2 branches missed.">        Objects.equals(this.empty, pageTarea.empty);</span>
+  }
+
+  @Override
+  public int hashCode() {
+<span class="nc" id="L301">    return Objects.hash(content, pageable, last, totalPages, totalElements, size, number, sort, first, numberOfElements, empty);</span>
+  }
+
+  @Override
+  public String toString() {
+<span class="nc" id="L306">    StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L307">    sb.append(&quot;class PageTarea {\n&quot;);</span>
+<span class="nc" id="L308">    sb.append(&quot;    content: &quot;).append(toIndentedString(content)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L309">    sb.append(&quot;    pageable: &quot;).append(toIndentedString(pageable)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L310">    sb.append(&quot;    last: &quot;).append(toIndentedString(last)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L311">    sb.append(&quot;    totalPages: &quot;).append(toIndentedString(totalPages)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L312">    sb.append(&quot;    totalElements: &quot;).append(toIndentedString(totalElements)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L313">    sb.append(&quot;    size: &quot;).append(toIndentedString(size)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L314">    sb.append(&quot;    number: &quot;).append(toIndentedString(number)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L315">    sb.append(&quot;    sort: &quot;).append(toIndentedString(sort)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L316">    sb.append(&quot;    first: &quot;).append(toIndentedString(first)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L317">    sb.append(&quot;    numberOfElements: &quot;).append(toIndentedString(numberOfElements)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L318">    sb.append(&quot;    empty: &quot;).append(toIndentedString(empty)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L319">    sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L320">    return sb.toString();</span>
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+<span class="nc bnc" id="L328" title="All 2 branches missed.">    if (o == null) {</span>
+<span class="nc" id="L329">      return &quot;null&quot;;</span>
+    }
+<span class="nc" id="L331">    return o.toString().replace(&quot;\n&quot;, &quot;\n    &quot;);</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

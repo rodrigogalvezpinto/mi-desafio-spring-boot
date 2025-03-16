@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EstadoTarea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestion-tareas</a> &gt; <a href="index.source.html" class="el_package">com.nuevospa.gestiontareas.dto.generated</a> &gt; <span class="el_source">EstadoTarea.java</span></div><h1>EstadoTarea.java</h1><pre class="source lang-java linenums">package com.nuevospa.gestiontareas.dto.generated;
+
+import java.net.URI;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
+
+/**
+ * EstadoTarea
+ */
+
+@Generated(value = &quot;org.openapitools.codegen.languages.SpringCodegen&quot;, date = &quot;2025-03-16T14:48:11.540969400-03:00[America/Santiago]&quot;)
+public class EstadoTarea {
+
+  private Integer id;
+
+  private String nombre;
+
+  private String descripcion;
+
+  /**
+   * Default constructor
+   * @deprecated Use {@link EstadoTarea#EstadoTarea(String)}
+   */
+  @Deprecated
+  public EstadoTarea() {
+<span class="nc" id="L35">    super();</span>
+<span class="nc" id="L36">  }</span>
+
+  /**
+   * Constructor with only required parameters
+   */
+<span class="fc" id="L41">  public EstadoTarea(String nombre) {</span>
+<span class="fc" id="L42">    this.nombre = nombre;</span>
+<span class="fc" id="L43">  }</span>
+
+  public EstadoTarea id(Integer id) {
+<span class="nc" id="L46">    this.id = id;</span>
+<span class="nc" id="L47">    return this;</span>
+  }
+
+  /**
+   * Get id
+   * @return id
+  */
+  
+  @Schema(name = &quot;id&quot;, accessMode = Schema.AccessMode.READ_ONLY, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;id&quot;)
+  public Integer getId() {
+<span class="fc" id="L58">    return id;</span>
+  }
+
+  public void setId(Integer id) {
+<span class="fc" id="L62">    this.id = id;</span>
+<span class="fc" id="L63">  }</span>
+
+  public EstadoTarea nombre(String nombre) {
+<span class="nc" id="L66">    this.nombre = nombre;</span>
+<span class="nc" id="L67">    return this;</span>
+  }
+
+  /**
+   * Get nombre
+   * @return nombre
+  */
+  @NotNull 
+  @Schema(name = &quot;nombre&quot;, requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty(&quot;nombre&quot;)
+  public String getNombre() {
+<span class="fc" id="L78">    return nombre;</span>
+  }
+
+  public void setNombre(String nombre) {
+<span class="nc" id="L82">    this.nombre = nombre;</span>
+<span class="nc" id="L83">  }</span>
+
+  public EstadoTarea descripcion(String descripcion) {
+<span class="nc" id="L86">    this.descripcion = descripcion;</span>
+<span class="nc" id="L87">    return this;</span>
+  }
+
+  /**
+   * Get descripcion
+   * @return descripcion
+  */
+  
+  @Schema(name = &quot;descripcion&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;descripcion&quot;)
+  public String getDescripcion() {
+<span class="fc" id="L98">    return descripcion;</span>
+  }
+
+  public void setDescripcion(String descripcion) {
+<span class="fc" id="L102">    this.descripcion = descripcion;</span>
+<span class="fc" id="L103">  }</span>
+
+  @Override
+  public boolean equals(Object o) {
+<span class="nc bnc" id="L107" title="All 2 branches missed.">    if (this == o) {</span>
+<span class="nc" id="L108">      return true;</span>
+    }
+<span class="nc bnc" id="L110" title="All 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L111">      return false;</span>
+    }
+<span class="nc" id="L113">    EstadoTarea estadoTarea = (EstadoTarea) o;</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">    return Objects.equals(this.id, estadoTarea.id) &amp;&amp;</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        Objects.equals(this.nombre, estadoTarea.nombre) &amp;&amp;</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        Objects.equals(this.descripcion, estadoTarea.descripcion);</span>
+  }
+
+  @Override
+  public int hashCode() {
+<span class="nc" id="L121">    return Objects.hash(id, nombre, descripcion);</span>
+  }
+
+  @Override
+  public String toString() {
+<span class="nc" id="L126">    StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L127">    sb.append(&quot;class EstadoTarea {\n&quot;);</span>
+<span class="nc" id="L128">    sb.append(&quot;    id: &quot;).append(toIndentedString(id)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L129">    sb.append(&quot;    nombre: &quot;).append(toIndentedString(nombre)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L130">    sb.append(&quot;    descripcion: &quot;).append(toIndentedString(descripcion)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L131">    sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L132">    return sb.toString();</span>
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+<span class="nc bnc" id="L140" title="All 2 branches missed.">    if (o == null) {</span>
+<span class="nc" id="L141">      return &quot;null&quot;;</span>
+    }
+<span class="nc" id="L143">    return o.toString().replace(&quot;\n&quot;, &quot;\n    &quot;);</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

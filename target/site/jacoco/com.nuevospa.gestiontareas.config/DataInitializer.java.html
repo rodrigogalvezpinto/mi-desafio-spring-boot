@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DataInitializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestion-tareas</a> &gt; <a href="index.source.html" class="el_package">com.nuevospa.gestiontareas.config</a> &gt; <span class="el_source">DataInitializer.java</span></div><h1>DataInitializer.java</h1><pre class="source lang-java linenums">package com.nuevospa.gestiontareas.config;
+
+import com.nuevospa.gestiontareas.model.EstadoTarea;
+import com.nuevospa.gestiontareas.model.Prioridad;
+import com.nuevospa.gestiontareas.model.Rol;
+import com.nuevospa.gestiontareas.model.Usuario;
+import com.nuevospa.gestiontareas.repository.EstadoTareaRepository;
+import com.nuevospa.gestiontareas.repository.PrioridadRepository;
+import com.nuevospa.gestiontareas.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+
+@Component
+<span class="nc" id="L17">@RequiredArgsConstructor</span>
+<span class="nc" id="L18">@Slf4j</span>
+public class DataInitializer implements CommandLineRunner {
+
+    private final EstadoTareaRepository estadoTareaRepository;
+    private final PrioridadRepository prioridadRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public void run(String... args) {
+<span class="nc" id="L28">        log.info(&quot;Inicializando datos de prueba...&quot;);</span>
+        
+        // Crear estados de tarea
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if (estadoTareaRepository.count() == 0) {</span>
+<span class="nc" id="L32">            log.info(&quot;Creando estados de tarea...&quot;);</span>
+<span class="nc" id="L33">            estadoTareaRepository.save(EstadoTarea.builder().nombre(&quot;Pendiente&quot;).descripcion(&quot;Tareas que aún no se han iniciado&quot;).build());</span>
+<span class="nc" id="L34">            estadoTareaRepository.save(EstadoTarea.builder().nombre(&quot;En Progreso&quot;).descripcion(&quot;Tareas que están siendo trabajadas&quot;).build());</span>
+<span class="nc" id="L35">            estadoTareaRepository.save(EstadoTarea.builder().nombre(&quot;Completada&quot;).descripcion(&quot;Tareas que han sido finalizadas&quot;).build());</span>
+<span class="nc" id="L36">            estadoTareaRepository.save(EstadoTarea.builder().nombre(&quot;Cancelada&quot;).descripcion(&quot;Tareas que han sido canceladas&quot;).build());</span>
+<span class="nc" id="L37">            log.info(&quot;Estados de tarea creados&quot;);</span>
+        }
+        
+        // Crear prioridades
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        if (prioridadRepository.count() == 0) {</span>
+<span class="nc" id="L42">            log.info(&quot;Creando prioridades...&quot;);</span>
+<span class="nc" id="L43">            prioridadRepository.save(Prioridad.builder().nombre(&quot;Alta&quot;).descripcion(&quot;Tareas urgentes que requieren atención inmediata&quot;).build());</span>
+<span class="nc" id="L44">            prioridadRepository.save(Prioridad.builder().nombre(&quot;Media&quot;).descripcion(&quot;Tareas importantes pero no urgentes&quot;).build());</span>
+<span class="nc" id="L45">            prioridadRepository.save(Prioridad.builder().nombre(&quot;Baja&quot;).descripcion(&quot;Tareas que pueden esperar&quot;).build());</span>
+<span class="nc" id="L46">            log.info(&quot;Prioridades creadas&quot;);</span>
+        }
+        
+        // Crear usuarios
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (usuarioRepository.count() == 0) {</span>
+<span class="nc" id="L51">            log.info(&quot;Creando usuarios...&quot;);</span>
+            
+            // Admin
+<span class="nc" id="L54">            Usuario admin = Usuario.builder()</span>
+<span class="nc" id="L55">                    .nombre(&quot;Admin&quot;)</span>
+<span class="nc" id="L56">                    .apellido(&quot;Sistema&quot;)</span>
+<span class="nc" id="L57">                    .email(&quot;admin@example.com&quot;)</span>
+<span class="nc" id="L58">                    .password(passwordEncoder.encode(&quot;admin123&quot;))</span>
+<span class="nc" id="L59">                    .rol(Rol.ADMIN)</span>
+<span class="nc" id="L60">                    .build();</span>
+<span class="nc" id="L61">            usuarioRepository.save(admin);</span>
+            
+            // Usuario normal
+<span class="nc" id="L64">            Usuario usuario = Usuario.builder()</span>
+<span class="nc" id="L65">                    .nombre(&quot;Usuario&quot;)</span>
+<span class="nc" id="L66">                    .apellido(&quot;Normal&quot;)</span>
+<span class="nc" id="L67">                    .email(&quot;usuario@example.com&quot;)</span>
+<span class="nc" id="L68">                    .password(passwordEncoder.encode(&quot;usuario123&quot;))</span>
+<span class="nc" id="L69">                    .rol(Rol.USUARIO)</span>
+<span class="nc" id="L70">                    .build();</span>
+<span class="nc" id="L71">            usuarioRepository.save(usuario);</span>
+            
+<span class="nc" id="L73">            log.info(&quot;Usuarios creados&quot;);</span>
+        }
+        
+<span class="nc" id="L76">        log.info(&quot;Inicialización de datos completada&quot;);</span>
+<span class="nc" id="L77">    }</span>
+} 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

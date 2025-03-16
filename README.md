@@ -1,6 +1,87 @@
 # Desafío Técnico: Gestión de Tareas con Spring Boot y Java
 
-La empresa NUEVO SPA desea desarrollar una plataforma de gestión de tareas para mejorar la productividad de sus equipos. El sistema debe permitir a los usuarios crear, actualizar, eliminar y listar tareas. Además, se requiere autenticación mediante JWT y documentación de la API utilizando OpenAPI y Swagger.
+La empresa NUEVO SPA desea desarrollar una plataforma de gestión de tareas para mejorar la productividad de sus equipos. El sistema permite a los usuarios crear, actualizar, eliminar y listar tareas. Además, incluye autenticación mediante JWT y documentación de la API utilizando OpenAPI y Swagger.
+
+## Características Implementadas
+
+- ✅ API RESTful con Spring Boot 3.1.x y Java 17
+- ✅ Base de datos H2 en memoria
+- ✅ Autenticación JWT
+- ✅ Documentación con OpenAPI y Swagger
+- ✅ Enfoque API First
+- ✅ Pruebas unitarias
+- ✅ Operaciones CRUD para tareas, usuarios, estados y prioridades
+
+## Enfoque API First
+
+Este proyecto implementa un enfoque API First, donde la especificación OpenAPI define el contrato de la API antes de la implementación. Para más detalles, consulta [README-API-FIRST.md](README-API-FIRST.md).
+
+## Cómo Ejecutar la Aplicación
+
+### Requisitos Previos
+
+- Java 17 o superior
+- Maven 3.6 o superior
+
+### Pasos para Ejecutar
+
+1. Clonar el repositorio:
+   ```
+   git clone https://github.com/tu-usuario/desafio-spring-boot.git
+   cd desafio-spring-boot
+   ```
+
+2. Compilar el proyecto:
+   ```
+   ./mvnw clean package
+   ```
+
+3. Ejecutar la aplicación:
+   ```
+   ./mvnw spring-boot:run
+   ```
+
+4. Acceder a la aplicación:
+   - API: http://localhost:8080/api
+   - Documentación Swagger: http://localhost:8080/api/swagger-ui.html
+   - Consola H2: http://localhost:8080/api/h2-console (JDBC URL: jdbc:h2:mem:tareas, Usuario: sa, Contraseña: vacía)
+
+## Pruebas
+
+Para ejecutar las pruebas:
+```
+./mvnw test
+```
+
+Para más detalles sobre las pruebas, consulta [README-TESTS.md](README-TESTS.md).
+
+## Documentación Adicional
+
+- [README-API-FIRST.md](README-API-FIRST.md): Detalles sobre el enfoque API First.
+- [README-TESTS.md](README-TESTS.md): Información sobre las pruebas.
+
+## Estructura del Proyecto
+
+El proyecto sigue una arquitectura en capas:
+
+1. **Controladores**: Implementan la interfaz generada por OpenAPI.
+2. **Servicios**: Contienen la lógica de negocio.
+3. **Repositorios**: Acceden a la base de datos.
+4. **Modelos**: Representan las entidades de la base de datos.
+5. **DTOs**: Objetos para transferir datos entre capas.
+6. **Seguridad**: Configuración y componentes de seguridad JWT.
+
+## Endpoints Principales
+
+- **POST /api/auth/login**: Autenticación de usuarios.
+- **GET /api/tareas**: Listar tareas con filtros y paginación.
+- **POST /api/tareas**: Crear una nueva tarea.
+- **GET /api/tareas/{id}**: Obtener una tarea por ID.
+- **PUT /api/tareas/{id}**: Actualizar una tarea.
+- **PATCH /api/tareas/{id}/estado**: Actualizar el estado de una tarea.
+- **DELETE /api/tareas/{id}**: Eliminar una tarea.
+
+Para ver todos los endpoints disponibles, consulta la documentación Swagger.
 
 ## Objetivo:
 Crear una API RESTful utilizando Spring Boot que gestione usuarios y tareas, aplicando buenas prácticas, principios SOLID y utilizando las tecnologías especificadas.

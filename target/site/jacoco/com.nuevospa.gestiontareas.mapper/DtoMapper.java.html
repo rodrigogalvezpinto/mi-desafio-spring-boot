@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DtoMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestion-tareas</a> &gt; <a href="index.source.html" class="el_package">com.nuevospa.gestiontareas.mapper</a> &gt; <span class="el_source">DtoMapper.java</span></div><h1>DtoMapper.java</h1><pre class="source lang-java linenums">package com.nuevospa.gestiontareas.mapper;
+
+import com.nuevospa.gestiontareas.dto.PageTarea;
+import com.nuevospa.gestiontareas.dto.CambioEstadoTarea;
+import com.nuevospa.gestiontareas.dto.LoginRequest;
+import com.nuevospa.gestiontareas.dto.LoginResponse;
+import com.nuevospa.gestiontareas.dto.generated.Usuario.RolEnum;
+import com.nuevospa.gestiontareas.model.EstadoTarea;
+import com.nuevospa.gestiontareas.model.Prioridad;
+import com.nuevospa.gestiontareas.model.Rol;
+import com.nuevospa.gestiontareas.model.Tarea;
+import com.nuevospa.gestiontareas.model.Usuario;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+/**
+ * Clase utilitaria para mapear entre los DTOs generados por OpenAPI y los modelos/DTOs existentes
+ */
+@Component
+<span class="fc" id="L27">public class DtoMapper {</span>
+
+    // Conversiones de fecha/hora
+    private OffsetDateTime toOffsetDateTime(LocalDateTime localDateTime) {
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        if (localDateTime == null) return null;</span>
+<span class="fc" id="L32">        return localDateTime.atOffset(ZoneOffset.UTC);</span>
+    }
+    
+    private LocalDateTime toLocalDateTime(OffsetDateTime offsetDateTime) {
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (offsetDateTime == null) return null;</span>
+<span class="nc" id="L37">        return offsetDateTime.toLocalDateTime();</span>
+    }
+
+    // Mappers para CambioEstadoTarea
+    public com.nuevospa.gestiontareas.dto.CambioEstadoTarea toModel(com.nuevospa.gestiontareas.dto.generated.CambioEstadoTarea dto) {
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (dto == null) return null;</span>
+        
+<span class="fc" id="L44">        com.nuevospa.gestiontareas.dto.CambioEstadoTarea model = new com.nuevospa.gestiontareas.dto.CambioEstadoTarea();</span>
+<span class="fc" id="L45">        model.setEstadoId(dto.getEstadoId());</span>
+<span class="fc" id="L46">        return model;</span>
+    }
+
+    public com.nuevospa.gestiontareas.dto.generated.CambioEstadoTarea toDto(com.nuevospa.gestiontareas.dto.CambioEstadoTarea model) {
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">        if (model == null) return null;</span>
+        
+<span class="fc" id="L52">        com.nuevospa.gestiontareas.dto.generated.CambioEstadoTarea dto = </span>
+<span class="fc" id="L53">            new com.nuevospa.gestiontareas.dto.generated.CambioEstadoTarea(model.getEstadoId());</span>
+<span class="fc" id="L54">        return dto;</span>
+    }
+
+    // Mappers para Tarea
+    public Tarea toModel(com.nuevospa.gestiontareas.dto.generated.Tarea dto) {
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        if (dto == null) return null;</span>
+        
+<span class="fc" id="L61">        Tarea model = new Tarea();</span>
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (dto.getId() != null) {</span>
+<span class="fc" id="L63">            model.setId(dto.getId());</span>
+        }
+<span class="fc" id="L65">        model.setTitulo(dto.getTitulo());</span>
+<span class="fc" id="L66">        model.setDescripcion(dto.getDescripcion());</span>
+<span class="fc" id="L67">        model.setFechaVencimiento(toLocalDateTime(dto.getFechaVencimiento()));</span>
+<span class="fc" id="L68">        model.setEstadoId(dto.getEstadoId());</span>
+<span class="fc" id="L69">        model.setPrioridadId(dto.getPrioridadId());</span>
+<span class="pc bpc" id="L70" title="1 of 2 branches missed.">        if (dto.getUsuarioAsignadoId() != null) {</span>
+<span class="nc" id="L71">            model.setUsuarioAsignadoId(dto.getUsuarioAsignadoId());</span>
+        }
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (dto.getUsuarioCreadorId() != null) {</span>
+<span class="nc" id="L74">            model.setUsuarioCreadorId(dto.getUsuarioCreadorId());</span>
+        }
+<span class="fc" id="L76">        return model;</span>
+    }
+
+    public com.nuevospa.gestiontareas.dto.generated.Tarea toDto(Tarea model) {
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        if (model == null) return null;</span>
+        
+<span class="fc" id="L82">        com.nuevospa.gestiontareas.dto.generated.Tarea dto = </span>
+<span class="fc" id="L83">            new com.nuevospa.gestiontareas.dto.generated.Tarea(model.getTitulo(), model.getEstadoId(), model.getPrioridadId());</span>
+        
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        if (model.getId() != null) {</span>
+<span class="fc" id="L86">            dto.setId(model.getId());</span>
+        }
+<span class="fc" id="L88">        dto.setDescripcion(model.getDescripcion());</span>
+<span class="fc" id="L89">        dto.setFechaCreacion(toOffsetDateTime(model.getFechaCreacion()));</span>
+<span class="fc" id="L90">        dto.setFechaVencimiento(toOffsetDateTime(model.getFechaVencimiento()));</span>
+        
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (model.getUsuarioAsignadoId() != null) {</span>
+<span class="fc" id="L93">            dto.setUsuarioAsignadoId(model.getUsuarioAsignadoId());</span>
+        }
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (model.getUsuarioCreadorId() != null) {</span>
+<span class="nc" id="L96">            dto.setUsuarioCreadorId(model.getUsuarioCreadorId());</span>
+        }
+<span class="fc" id="L98">        return dto;</span>
+    }
+
+    // Mappers para LoginRequest
+    public com.nuevospa.gestiontareas.dto.LoginRequest toModel(com.nuevospa.gestiontareas.dto.generated.LoginRequest dto) {
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        if (dto == null) return null;</span>
+        
+<span class="fc" id="L105">        com.nuevospa.gestiontareas.dto.LoginRequest model = new com.nuevospa.gestiontareas.dto.LoginRequest();</span>
+<span class="fc" id="L106">        model.setEmail(dto.getEmail());</span>
+<span class="fc" id="L107">        model.setPassword(dto.getPassword());</span>
+<span class="fc" id="L108">        return model;</span>
+    }
+
+    public com.nuevospa.gestiontareas.dto.generated.LoginRequest toDto(com.nuevospa.gestiontareas.dto.LoginRequest model) {
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        if (model == null) return null;</span>
+        
+<span class="nc" id="L114">        com.nuevospa.gestiontareas.dto.generated.LoginRequest dto = </span>
+<span class="nc" id="L115">            new com.nuevospa.gestiontareas.dto.generated.LoginRequest(model.getEmail(), model.getPassword());</span>
+<span class="nc" id="L116">        return dto;</span>
+    }
+
+    // Mappers para LoginResponse
+    public com.nuevospa.gestiontareas.dto.generated.LoginResponse toDto(com.nuevospa.gestiontareas.dto.LoginResponse model) {
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        if (model == null) return null;</span>
+        
+<span class="fc" id="L123">        com.nuevospa.gestiontareas.dto.generated.LoginResponse dto = </span>
+            new com.nuevospa.gestiontareas.dto.generated.LoginResponse(
+<span class="fc" id="L125">                model.getToken(), </span>
+<span class="fc" id="L126">                model.getTokenType(), </span>
+<span class="fc" id="L127">                model.getUsuarioId(), </span>
+<span class="fc" id="L128">                model.getNombre(), </span>
+<span class="fc" id="L129">                model.getEmail(), </span>
+<span class="fc" id="L130">                model.getRol().name()</span>
+            );
+<span class="fc" id="L132">        return dto;</span>
+    }
+
+    // Mappers para EstadoTarea
+    public com.nuevospa.gestiontareas.dto.generated.EstadoTarea toDto(EstadoTarea model) {
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (model == null) return null;</span>
+        
+<span class="fc" id="L139">        com.nuevospa.gestiontareas.dto.generated.EstadoTarea dto = </span>
+<span class="fc" id="L140">            new com.nuevospa.gestiontareas.dto.generated.EstadoTarea(model.getNombre());</span>
+        
+<span class="fc" id="L142">        dto.setId(model.getId());</span>
+<span class="fc" id="L143">        dto.setDescripcion(model.getDescripcion());</span>
+<span class="fc" id="L144">        return dto;</span>
+    }
+
+    public List&lt;com.nuevospa.gestiontareas.dto.generated.EstadoTarea&gt; toEstadoDtoList(List&lt;EstadoTarea&gt; models) {
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        if (models == null) return null;</span>
+<span class="fc" id="L149">        return models.stream().map(this::toDto).collect(Collectors.toList());</span>
+    }
+
+    // Mappers para Prioridad
+    public com.nuevospa.gestiontareas.dto.generated.Prioridad toDto(Prioridad model) {
+<span class="nc bnc" id="L154" title="All 2 branches missed.">        if (model == null) return null;</span>
+        
+<span class="nc" id="L156">        com.nuevospa.gestiontareas.dto.generated.Prioridad dto = </span>
+<span class="nc" id="L157">            new com.nuevospa.gestiontareas.dto.generated.Prioridad(model.getNombre());</span>
+        
+<span class="nc" id="L159">        dto.setId(model.getId());</span>
+<span class="nc" id="L160">        dto.setDescripcion(model.getDescripcion());</span>
+<span class="nc" id="L161">        return dto;</span>
+    }
+
+    public List&lt;com.nuevospa.gestiontareas.dto.generated.Prioridad&gt; toPrioridadDtoList(List&lt;Prioridad&gt; models) {
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (models == null) return null;</span>
+<span class="nc" id="L166">        return models.stream().map(this::toDto).collect(Collectors.toList());</span>
+    }
+
+    // Mappers para Usuario
+    public com.nuevospa.gestiontareas.dto.generated.Usuario toDto(Usuario model) {
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (model == null) return null;</span>
+        
+<span class="nc" id="L173">        RolEnum rolEnum = RolEnum.fromValue(model.getRol().name());</span>
+        
+<span class="nc" id="L175">        com.nuevospa.gestiontareas.dto.generated.Usuario dto = </span>
+            new com.nuevospa.gestiontareas.dto.generated.Usuario(
+<span class="nc" id="L177">                model.getEmail(), </span>
+                null,
+<span class="nc" id="L179">                model.getNombre(), </span>
+<span class="nc" id="L180">                model.getApellido(), </span>
+                rolEnum
+            );
+        
+<span class="nc" id="L184">        dto.setId(model.getId());</span>
+<span class="nc" id="L185">        dto.setFechaCreacion(toOffsetDateTime(model.getFechaCreacion()));</span>
+<span class="nc" id="L186">        return dto;</span>
+    }
+
+    public List&lt;com.nuevospa.gestiontareas.dto.generated.Usuario&gt; toUsuarioDtoList(List&lt;Usuario&gt; models) {
+<span class="nc bnc" id="L190" title="All 2 branches missed.">        if (models == null) return null;</span>
+<span class="nc" id="L191">        return models.stream().map(this::toDto).collect(Collectors.toList());</span>
+    }
+
+    // Mappers para PageTarea
+    public com.nuevospa.gestiontareas.dto.generated.PageTarea toDto(PageTarea model) {
+<span class="nc bnc" id="L196" title="All 2 branches missed.">        if (model == null) return null;</span>
+        
+<span class="nc" id="L198">        com.nuevospa.gestiontareas.dto.generated.PageTarea dto = new com.nuevospa.gestiontareas.dto.generated.PageTarea();</span>
+        
+        // Mapear el contenido (lista de tareas)
+<span class="nc bnc" id="L201" title="All 2 branches missed.">        if (model.getContent() != null) {</span>
+<span class="nc" id="L202">            dto.setContent(model.getContent().stream()</span>
+<span class="nc" id="L203">                    .map(this::toDto)</span>
+<span class="nc" id="L204">                    .collect(Collectors.toList()));</span>
+        }
+        
+        // Mapear propiedades de paginación
+<span class="nc" id="L208">        dto.setTotalPages(model.getTotalPages());</span>
+<span class="nc" id="L209">        dto.setTotalElements(model.getTotalElements());</span>
+<span class="nc" id="L210">        dto.setSize(model.getSize());</span>
+<span class="nc" id="L211">        dto.setNumber(model.getNumber());</span>
+<span class="nc" id="L212">        dto.setNumberOfElements(model.getNumberOfElements());</span>
+<span class="nc" id="L213">        dto.setFirst(model.isFirst());</span>
+<span class="nc" id="L214">        dto.setLast(model.isLast());</span>
+<span class="nc" id="L215">        dto.setEmpty(model.isEmpty());</span>
+        
+<span class="nc" id="L217">        return dto;</span>
+    }
+
+    // Métodos para convertir ResponseEntity
+    public ResponseEntity&lt;com.nuevospa.gestiontareas.dto.generated.Tarea&gt; toTareaResponse(ResponseEntity&lt;Tarea&gt; response) {
+<span class="pc bpc" id="L222" title="1 of 2 branches missed.">        if (response == null) return null;</span>
+        
+<span class="pc bpc" id="L224" title="1 of 2 branches missed.">        if (response.getBody() == null) {</span>
+<span class="nc" id="L225">            return new ResponseEntity&lt;&gt;(response.getStatusCode());</span>
+        }
+        
+<span class="fc" id="L228">        return new ResponseEntity&lt;&gt;(toDto(response.getBody()), response.getHeaders(), response.getStatusCode());</span>
+    }
+
+    public ResponseEntity&lt;List&lt;com.nuevospa.gestiontareas.dto.generated.EstadoTarea&gt;&gt; toEstadoListResponse(ResponseEntity&lt;List&lt;EstadoTarea&gt;&gt; response) {
+<span class="pc bpc" id="L232" title="1 of 2 branches missed.">        if (response == null) return null;</span>
+        
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">        if (response.getBody() == null) {</span>
+<span class="nc" id="L235">            return new ResponseEntity&lt;&gt;(response.getStatusCode());</span>
+        }
+        
+<span class="fc" id="L238">        return new ResponseEntity&lt;&gt;(toEstadoDtoList(response.getBody()), response.getHeaders(), response.getStatusCode());</span>
+    }
+
+    public ResponseEntity&lt;List&lt;com.nuevospa.gestiontareas.dto.generated.Prioridad&gt;&gt; toPrioridadListResponse(ResponseEntity&lt;List&lt;Prioridad&gt;&gt; response) {
+<span class="nc bnc" id="L242" title="All 2 branches missed.">        if (response == null) return null;</span>
+        
+<span class="nc bnc" id="L244" title="All 2 branches missed.">        if (response.getBody() == null) {</span>
+<span class="nc" id="L245">            return new ResponseEntity&lt;&gt;(response.getStatusCode());</span>
+        }
+        
+<span class="nc" id="L248">        return new ResponseEntity&lt;&gt;(toPrioridadDtoList(response.getBody()), response.getHeaders(), response.getStatusCode());</span>
+    }
+
+    public ResponseEntity&lt;com.nuevospa.gestiontareas.dto.generated.Usuario&gt; toUsuarioResponse(ResponseEntity&lt;Usuario&gt; response) {
+<span class="nc bnc" id="L252" title="All 2 branches missed.">        if (response == null) return null;</span>
+        
+<span class="nc bnc" id="L254" title="All 2 branches missed.">        if (response.getBody() == null) {</span>
+<span class="nc" id="L255">            return new ResponseEntity&lt;&gt;(response.getStatusCode());</span>
+        }
+        
+<span class="nc" id="L258">        return new ResponseEntity&lt;&gt;(toDto(response.getBody()), response.getHeaders(), response.getStatusCode());</span>
+    }
+
+    public ResponseEntity&lt;List&lt;com.nuevospa.gestiontareas.dto.generated.Usuario&gt;&gt; toUsuarioListResponse(ResponseEntity&lt;List&lt;Usuario&gt;&gt; response) {
+<span class="nc bnc" id="L262" title="All 2 branches missed.">        if (response == null) return null;</span>
+        
+<span class="nc bnc" id="L264" title="All 2 branches missed.">        if (response.getBody() == null) {</span>
+<span class="nc" id="L265">            return new ResponseEntity&lt;&gt;(response.getStatusCode());</span>
+        }
+        
+<span class="nc" id="L268">        return new ResponseEntity&lt;&gt;(toUsuarioDtoList(response.getBody()), response.getHeaders(), response.getStatusCode());</span>
+    }
+
+    public ResponseEntity&lt;com.nuevospa.gestiontareas.dto.generated.PageTarea&gt; toPageTareaResponse(ResponseEntity&lt;PageTarea&gt; response) {
+<span class="nc bnc" id="L272" title="All 2 branches missed.">        if (response == null) return null;</span>
+        
+<span class="nc bnc" id="L274" title="All 2 branches missed.">        if (response.getBody() == null) {</span>
+<span class="nc" id="L275">            return new ResponseEntity&lt;&gt;(response.getStatusCode());</span>
+        }
+        
+<span class="nc" id="L278">        return new ResponseEntity&lt;&gt;(toDto(response.getBody()), response.getHeaders(), response.getStatusCode());</span>
+    }
+
+    public ResponseEntity&lt;com.nuevospa.gestiontareas.dto.generated.LoginResponse&gt; toLoginResponse(ResponseEntity&lt;LoginResponse&gt; response) {
+<span class="pc bpc" id="L282" title="1 of 2 branches missed.">        if (response == null) return null;</span>
+        
+<span class="pc bpc" id="L284" title="1 of 2 branches missed.">        if (response.getBody() == null) {</span>
+<span class="nc" id="L285">            return new ResponseEntity&lt;&gt;(response.getStatusCode());</span>
+        }
+        
+<span class="fc" id="L288">        return new ResponseEntity&lt;&gt;(toDto(response.getBody()), response.getHeaders(), response.getStatusCode());</span>
+    }
+} 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

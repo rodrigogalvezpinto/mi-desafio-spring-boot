@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.nuevospa.gestiontareas.security.JwtTokenUtilTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.391 s - in com.nuevospa.gestiontareas.security.JwtTokenUtilTest

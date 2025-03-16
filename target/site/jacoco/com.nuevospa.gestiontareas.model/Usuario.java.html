@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Usuario.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestion-tareas</a> &gt; <a href="index.source.html" class="el_package">com.nuevospa.gestiontareas.model</a> &gt; <span class="el_source">Usuario.java</span></div><h1>Usuario.java</h1><pre class="source lang-java linenums">package com.nuevospa.gestiontareas.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Entity
+@Table(name = &quot;usuarios&quot;)
+<span class="pc bnc" id="L18" title="All 62 branches missed.">@Data</span>
+<span class="fc" id="L19">@NoArgsConstructor</span>
+<span class="nc" id="L20">@AllArgsConstructor</span>
+<span class="nc" id="L21">@Builder</span>
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+<span class="fc" id="L26">    private UUID id;</span>
+
+    @NotBlank(message = &quot;El nombre es obligatorio&quot;)
+    @Size(min = 3, message = &quot;El nombre debe tener al menos 3 caracteres&quot;)
+    @Column(nullable = false)
+<span class="fc" id="L31">    private String nombre;</span>
+
+    @NotBlank(message = &quot;El email es obligatorio&quot;)
+    @Email(message = &quot;Formato de email inválido&quot;)
+    @Column(nullable = false, unique = true)
+<span class="fc" id="L36">    private String email;</span>
+
+    @NotBlank(message = &quot;La contraseña es obligatoria&quot;)
+    @Size(min = 8, message = &quot;La contraseña debe tener al menos 8 caracteres&quot;)
+    @Column(nullable = false)
+<span class="fc" id="L41">    private String password;</span>
+
+    @Column(nullable = false)
+<span class="fc" id="L44">    private String apellido;</span>
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+<span class="fc" id="L48">    private Rol rol;</span>
+
+    @CreationTimestamp
+    @Column(name = &quot;fecha_creacion&quot;, updatable = false)
+<span class="fc" id="L52">    private LocalDateTime fechaCreacion;</span>
+
+    @PrePersist
+    protected void onCreate() {
+<span class="nc" id="L56">        fechaCreacion = LocalDateTime.now();</span>
+<span class="nc" id="L57">    }</span>
+} 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

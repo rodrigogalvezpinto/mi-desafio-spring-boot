@@ -1,0 +1,13 @@
+README.md
+pom.xml
+src/main/java/com/nuevospa/gestiontareas/api/generated/ApiApi.java
+src/main/java/com/nuevospa/gestiontareas/api/generated/ApiUtil.java
+src/main/java/com/nuevospa/gestiontareas/dto/generated/CambioEstadoTarea.java
+src/main/java/com/nuevospa/gestiontareas/dto/generated/Error.java
+src/main/java/com/nuevospa/gestiontareas/dto/generated/EstadoTarea.java
+src/main/java/com/nuevospa/gestiontareas/dto/generated/LoginRequest.java
+src/main/java/com/nuevospa/gestiontareas/dto/generated/LoginResponse.java
+src/main/java/com/nuevospa/gestiontareas/dto/generated/PageTarea.java
+src/main/java/com/nuevospa/gestiontareas/dto/generated/Prioridad.java
+src/main/java/com/nuevospa/gestiontareas/dto/generated/Tarea.java
+src/main/java/com/nuevospa/gestiontareas/dto/generated/Usuario.java

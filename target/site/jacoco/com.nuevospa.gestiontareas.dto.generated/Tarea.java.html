@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tarea.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">gestion-tareas</a> &gt; <a href="index.source.html" class="el_package">com.nuevospa.gestiontareas.dto.generated</a> &gt; <span class="el_source">Tarea.java</span></div><h1>Tarea.java</h1><pre class="source lang-java linenums">package com.nuevospa.gestiontareas.dto.generated;
+
+import java.net.URI;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import java.time.OffsetDateTime;
+import java.util.UUID;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.OffsetDateTime;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+
+import java.util.*;
+import jakarta.annotation.Generated;
+
+/**
+ * Tarea
+ */
+
+@Generated(value = &quot;org.openapitools.codegen.languages.SpringCodegen&quot;, date = &quot;2025-03-16T14:48:11.540969400-03:00[America/Santiago]&quot;)
+public class Tarea {
+
+  private UUID id;
+
+  private String titulo;
+
+  private String descripcion;
+
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime fechaCreacion;
+
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+  private OffsetDateTime fechaVencimiento;
+
+  private Integer estadoId;
+
+  private Integer prioridadId;
+
+  private UUID usuarioAsignadoId;
+
+  private UUID usuarioCreadorId;
+
+  /**
+   * Default constructor
+   * @deprecated Use {@link Tarea#Tarea(String, Integer, Integer)}
+   */
+  @Deprecated
+  public Tarea() {
+<span class="nc" id="L52">    super();</span>
+<span class="nc" id="L53">  }</span>
+
+  /**
+   * Constructor with only required parameters
+   */
+<span class="fc" id="L58">  public Tarea(String titulo, Integer estadoId, Integer prioridadId) {</span>
+<span class="fc" id="L59">    this.titulo = titulo;</span>
+<span class="fc" id="L60">    this.estadoId = estadoId;</span>
+<span class="fc" id="L61">    this.prioridadId = prioridadId;</span>
+<span class="fc" id="L62">  }</span>
+
+  public Tarea id(UUID id) {
+<span class="nc" id="L65">    this.id = id;</span>
+<span class="nc" id="L66">    return this;</span>
+  }
+
+  /**
+   * Get id
+   * @return id
+  */
+  @Valid 
+  @Schema(name = &quot;id&quot;, accessMode = Schema.AccessMode.READ_ONLY, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;id&quot;)
+  public UUID getId() {
+<span class="fc" id="L77">    return id;</span>
+  }
+
+  public void setId(UUID id) {
+<span class="fc" id="L81">    this.id = id;</span>
+<span class="fc" id="L82">  }</span>
+
+  public Tarea titulo(String titulo) {
+<span class="nc" id="L85">    this.titulo = titulo;</span>
+<span class="nc" id="L86">    return this;</span>
+  }
+
+  /**
+   * Get titulo
+   * @return titulo
+  */
+  @NotNull 
+  @Schema(name = &quot;titulo&quot;, requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty(&quot;titulo&quot;)
+  public String getTitulo() {
+<span class="fc" id="L97">    return titulo;</span>
+  }
+
+  public void setTitulo(String titulo) {
+<span class="nc" id="L101">    this.titulo = titulo;</span>
+<span class="nc" id="L102">  }</span>
+
+  public Tarea descripcion(String descripcion) {
+<span class="nc" id="L105">    this.descripcion = descripcion;</span>
+<span class="nc" id="L106">    return this;</span>
+  }
+
+  /**
+   * Get descripcion
+   * @return descripcion
+  */
+  
+  @Schema(name = &quot;descripcion&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;descripcion&quot;)
+  public String getDescripcion() {
+<span class="fc" id="L117">    return descripcion;</span>
+  }
+
+  public void setDescripcion(String descripcion) {
+<span class="fc" id="L121">    this.descripcion = descripcion;</span>
+<span class="fc" id="L122">  }</span>
+
+  public Tarea fechaCreacion(OffsetDateTime fechaCreacion) {
+<span class="nc" id="L125">    this.fechaCreacion = fechaCreacion;</span>
+<span class="nc" id="L126">    return this;</span>
+  }
+
+  /**
+   * Get fechaCreacion
+   * @return fechaCreacion
+  */
+  @Valid 
+  @Schema(name = &quot;fechaCreacion&quot;, accessMode = Schema.AccessMode.READ_ONLY, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;fechaCreacion&quot;)
+  public OffsetDateTime getFechaCreacion() {
+<span class="nc" id="L137">    return fechaCreacion;</span>
+  }
+
+  public void setFechaCreacion(OffsetDateTime fechaCreacion) {
+<span class="fc" id="L141">    this.fechaCreacion = fechaCreacion;</span>
+<span class="fc" id="L142">  }</span>
+
+  public Tarea fechaVencimiento(OffsetDateTime fechaVencimiento) {
+<span class="nc" id="L145">    this.fechaVencimiento = fechaVencimiento;</span>
+<span class="nc" id="L146">    return this;</span>
+  }
+
+  /**
+   * Get fechaVencimiento
+   * @return fechaVencimiento
+  */
+  @Valid 
+  @Schema(name = &quot;fechaVencimiento&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;fechaVencimiento&quot;)
+  public OffsetDateTime getFechaVencimiento() {
+<span class="fc" id="L157">    return fechaVencimiento;</span>
+  }
+
+  public void setFechaVencimiento(OffsetDateTime fechaVencimiento) {
+<span class="fc" id="L161">    this.fechaVencimiento = fechaVencimiento;</span>
+<span class="fc" id="L162">  }</span>
+
+  public Tarea estadoId(Integer estadoId) {
+<span class="nc" id="L165">    this.estadoId = estadoId;</span>
+<span class="nc" id="L166">    return this;</span>
+  }
+
+  /**
+   * Get estadoId
+   * @return estadoId
+  */
+  @NotNull 
+  @Schema(name = &quot;estadoId&quot;, requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty(&quot;estadoId&quot;)
+  public Integer getEstadoId() {
+<span class="fc" id="L177">    return estadoId;</span>
+  }
+
+  public void setEstadoId(Integer estadoId) {
+<span class="nc" id="L181">    this.estadoId = estadoId;</span>
+<span class="nc" id="L182">  }</span>
+
+  public Tarea prioridadId(Integer prioridadId) {
+<span class="nc" id="L185">    this.prioridadId = prioridadId;</span>
+<span class="nc" id="L186">    return this;</span>
+  }
+
+  /**
+   * Get prioridadId
+   * @return prioridadId
+  */
+  @NotNull 
+  @Schema(name = &quot;prioridadId&quot;, requiredMode = Schema.RequiredMode.REQUIRED)
+  @JsonProperty(&quot;prioridadId&quot;)
+  public Integer getPrioridadId() {
+<span class="fc" id="L197">    return prioridadId;</span>
+  }
+
+  public void setPrioridadId(Integer prioridadId) {
+<span class="nc" id="L201">    this.prioridadId = prioridadId;</span>
+<span class="nc" id="L202">  }</span>
+
+  public Tarea usuarioAsignadoId(UUID usuarioAsignadoId) {
+<span class="nc" id="L205">    this.usuarioAsignadoId = usuarioAsignadoId;</span>
+<span class="nc" id="L206">    return this;</span>
+  }
+
+  /**
+   * Get usuarioAsignadoId
+   * @return usuarioAsignadoId
+  */
+  @Valid 
+  @Schema(name = &quot;usuarioAsignadoId&quot;, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;usuarioAsignadoId&quot;)
+  public UUID getUsuarioAsignadoId() {
+<span class="fc" id="L217">    return usuarioAsignadoId;</span>
+  }
+
+  public void setUsuarioAsignadoId(UUID usuarioAsignadoId) {
+<span class="fc" id="L221">    this.usuarioAsignadoId = usuarioAsignadoId;</span>
+<span class="fc" id="L222">  }</span>
+
+  public Tarea usuarioCreadorId(UUID usuarioCreadorId) {
+<span class="nc" id="L225">    this.usuarioCreadorId = usuarioCreadorId;</span>
+<span class="nc" id="L226">    return this;</span>
+  }
+
+  /**
+   * Get usuarioCreadorId
+   * @return usuarioCreadorId
+  */
+  @Valid 
+  @Schema(name = &quot;usuarioCreadorId&quot;, accessMode = Schema.AccessMode.READ_ONLY, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty(&quot;usuarioCreadorId&quot;)
+  public UUID getUsuarioCreadorId() {
+<span class="fc" id="L237">    return usuarioCreadorId;</span>
+  }
+
+  public void setUsuarioCreadorId(UUID usuarioCreadorId) {
+<span class="nc" id="L241">    this.usuarioCreadorId = usuarioCreadorId;</span>
+<span class="nc" id="L242">  }</span>
+
+  @Override
+  public boolean equals(Object o) {
+<span class="nc bnc" id="L246" title="All 2 branches missed.">    if (this == o) {</span>
+<span class="nc" id="L247">      return true;</span>
+    }
+<span class="nc bnc" id="L249" title="All 4 branches missed.">    if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L250">      return false;</span>
+    }
+<span class="nc" id="L252">    Tarea tarea = (Tarea) o;</span>
+<span class="nc bnc" id="L253" title="All 2 branches missed.">    return Objects.equals(this.id, tarea.id) &amp;&amp;</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">        Objects.equals(this.titulo, tarea.titulo) &amp;&amp;</span>
+<span class="nc bnc" id="L255" title="All 2 branches missed.">        Objects.equals(this.descripcion, tarea.descripcion) &amp;&amp;</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">        Objects.equals(this.fechaCreacion, tarea.fechaCreacion) &amp;&amp;</span>
+<span class="nc bnc" id="L257" title="All 2 branches missed.">        Objects.equals(this.fechaVencimiento, tarea.fechaVencimiento) &amp;&amp;</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">        Objects.equals(this.estadoId, tarea.estadoId) &amp;&amp;</span>
+<span class="nc bnc" id="L259" title="All 2 branches missed.">        Objects.equals(this.prioridadId, tarea.prioridadId) &amp;&amp;</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">        Objects.equals(this.usuarioAsignadoId, tarea.usuarioAsignadoId) &amp;&amp;</span>
+<span class="nc bnc" id="L261" title="All 2 branches missed.">        Objects.equals(this.usuarioCreadorId, tarea.usuarioCreadorId);</span>
+  }
+
+  @Override
+  public int hashCode() {
+<span class="nc" id="L266">    return Objects.hash(id, titulo, descripcion, fechaCreacion, fechaVencimiento, estadoId, prioridadId, usuarioAsignadoId, usuarioCreadorId);</span>
+  }
+
+  @Override
+  public String toString() {
+<span class="nc" id="L271">    StringBuilder sb = new StringBuilder();</span>
+<span class="nc" id="L272">    sb.append(&quot;class Tarea {\n&quot;);</span>
+<span class="nc" id="L273">    sb.append(&quot;    id: &quot;).append(toIndentedString(id)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L274">    sb.append(&quot;    titulo: &quot;).append(toIndentedString(titulo)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L275">    sb.append(&quot;    descripcion: &quot;).append(toIndentedString(descripcion)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L276">    sb.append(&quot;    fechaCreacion: &quot;).append(toIndentedString(fechaCreacion)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L277">    sb.append(&quot;    fechaVencimiento: &quot;).append(toIndentedString(fechaVencimiento)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L278">    sb.append(&quot;    estadoId: &quot;).append(toIndentedString(estadoId)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L279">    sb.append(&quot;    prioridadId: &quot;).append(toIndentedString(prioridadId)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L280">    sb.append(&quot;    usuarioAsignadoId: &quot;).append(toIndentedString(usuarioAsignadoId)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L281">    sb.append(&quot;    usuarioCreadorId: &quot;).append(toIndentedString(usuarioCreadorId)).append(&quot;\n&quot;);</span>
+<span class="nc" id="L282">    sb.append(&quot;}&quot;);</span>
+<span class="nc" id="L283">    return sb.toString();</span>
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(Object o) {
+<span class="nc bnc" id="L291" title="All 2 branches missed.">    if (o == null) {</span>
+<span class="nc" id="L292">      return &quot;null&quot;;</span>
+    }
+<span class="nc" id="L294">    return o.toString().replace(&quot;\n&quot;, &quot;\n    &quot;);</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

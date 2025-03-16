@@ -1,0 +1,595 @@
+openapi: 3.0.3
+info:
+  title: Gestión de Tareas API
+  description: API para el sistema de gestión de tareas
+  version: 1.0.0
+  contact:
+    name: NuevoSPA
+    email: soporte@nuevospa.com
+
+servers:
+  - url: http://localhost:8080
+    description: Servidor de desarrollo
+
+security:
+  - bearerAuth: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          writeOnly: true
+        nombre:
+          type: string
+        apellido:
+          type: string
+        rol:
+          type: string
+          enum: [ADMIN, USUARIO]
+        fechaCreacion:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+        - email
+        - password
+        - nombre
+        - apellido
+        - rol
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        tokenType:
+          type: string
+        usuarioId:
+          type: string
+          format: uuid
+        nombre:
+          type: string
+        email:
+          type: string
+        rol:
+          type: string
+      required:
+        - token
+        - tokenType
+        - usuarioId
+        - nombre
+        - email
+        - rol
+
+    EstadoTarea:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          readOnly: true
+        nombre:
+          type: string
+        descripcion:
+          type: string
+      required:
+        - nombre
+
+    Prioridad:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          readOnly: true
+        nombre:
+          type: string
+        descripcion:
+          type: string
+      required:
+        - nombre
+
+    Tarea:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        titulo:
+          type: string
+        descripcion:
+          type: string
+        fechaCreacion:
+          type: string
+          format: date-time
+          readOnly: true
+        fechaVencimiento:
+          type: string
+          format: date-time
+        estadoId:
+          type: integer
+          format: int32
+        prioridadId:
+          type: integer
+          format: int32
+        usuarioAsignadoId:
+          type: string
+          format: uuid
+        usuarioCreadorId:
+          type: string
+          format: uuid
+          readOnly: true
+      required:
+        - titulo
+        - estadoId
+        - prioridadId
+
+    CambioEstadoTarea:
+      type: object
+      properties:
+        estadoId:
+          type: integer
+          format: int32
+      required:
+        - estadoId
+
+    Error:
+      type: object
+      properties:
+        codigo:
+          type: string
+        mensaje:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        detalles:
+          type: array
+          items:
+            type: string
+      required:
+        - codigo
+        - mensaje
+        - timestamp
+
+    PageTarea:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tarea'
+        pageable:
+          type: object
+        last:
+          type: boolean
+        totalPages:
+          type: integer
+          format: int32
+        totalElements:
+          type: integer
+          format: int64
+        size:
+          type: integer
+          format: int32
+        number:
+          type: integer
+          format: int32
+        sort:
+          type: object
+        first:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        empty:
+          type: boolean
+
+paths:
+  /api/auth/login:
+    post:
+      tags:
+        - auth
+      summary: Iniciar sesión
+      operationId: login
+      security: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          description: Login exitoso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '401':
+          description: Credenciales inválidas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/usuarios:
+    get:
+      tags:
+        - usuarios
+      summary: Obtener todos los usuarios
+      operationId: obtenerUsuarios
+      responses:
+        '200':
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Usuario'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Prohibido - Solo administradores
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/usuarios/{id}:
+    get:
+      tags:
+        - usuarios
+      summary: Obtener usuario por ID
+      operationId: obtenerUsuarioPorId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Usuario encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usuario'
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/estados:
+    get:
+      tags:
+        - estados
+      summary: Obtener todos los estados de tareas
+      operationId: obtenerEstados
+      responses:
+        '200':
+          description: Lista de estados
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EstadoTarea'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/prioridades:
+    get:
+      tags:
+        - prioridades
+      summary: Obtener todas las prioridades
+      operationId: obtenerPrioridades
+      responses:
+        '200':
+          description: Lista de prioridades
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Prioridad'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/tareas:
+    get:
+      tags:
+        - tareas
+      summary: Obtener tareas paginadas y filtradas
+      operationId: obtenerTareas
+      parameters:
+        - name: page
+          in: query
+          description: Número de página (empieza en 0)
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          description: Elementos por página
+          schema:
+            type: integer
+            default: 10
+        - name: estadoId
+          in: query
+          description: Filtrar por estado
+          schema:
+            type: integer
+            format: int32
+        - name: usuarioId
+          in: query
+          description: Filtrar por usuario asignado
+          schema:
+            type: string
+            format: uuid
+        - name: prioridad
+          in: query
+          description: Filtrar por prioridad
+          schema:
+            type: integer
+            format: int32
+        - name: sort
+          in: query
+          description: Ordenar por campos (fechaCreacion,desc)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lista paginada de tareas
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageTarea'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - tareas
+      summary: Crear una nueva tarea
+      operationId: crearTarea
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tarea'
+        required: true
+      responses:
+        '201':
+          description: Tarea creada
+          headers:
+            Location:
+              schema:
+                type: string
+              description: URI de la tarea creada
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/tareas/{id}:
+    get:
+      tags:
+        - tareas
+      summary: Obtener tarea por ID
+      operationId: obtenerTareaPorId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Tarea encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarea'
+        '404':
+          description: Tarea no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - tareas
+      summary: Actualizar una tarea
+      operationId: actualizarTarea
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tarea'
+        required: true
+      responses:
+        '200':
+          description: Tarea actualizada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarea'
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Tarea no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Prohibido - Sin permisos para esta tarea
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - tareas
+      summary: Eliminar una tarea
+      operationId: eliminarTarea
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Tarea eliminada
+        '404':
+          description: Tarea no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Prohibido - Sin permisos para esta tarea
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/tareas/{id}/estado:
+    patch:
+      tags:
+        - tareas
+      summary: Actualizar estado de una tarea
+      operationId: actualizarEstadoTarea
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CambioEstadoTarea'
+        required: true
+      responses:
+        '200':
+          description: Estado de tarea actualizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tarea'
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Tarea no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
