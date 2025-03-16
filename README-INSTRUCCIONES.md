@@ -36,7 +36,7 @@ La aplicación se iniciará en `http://localhost:8080` con el contexto `/api`.
 Una vez que la aplicación esté en ejecución, puedes acceder a la documentación de la API a través de Swagger UI:
 
 ```
-http://localhost:8080/swagger-ui/index.html
+http://localhost:8080/api/swagger-ui/index.html
 ```
 
 ## Usuarios predefinidos
@@ -99,7 +99,7 @@ Para regenerar el código a partir de la definición OpenAPI, ejecuta:
 La aplicación utiliza una base de datos H2 en memoria. Puedes acceder a la consola H2 en:
 
 ```
-http://localhost:8080/h2-console
+http://localhost:8080/api/h2-console
 ```
 
 Configuración de conexión:
